@@ -22,7 +22,7 @@ def get_post(post_id):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
 
-# Define the main route of the web application 
+# Define the main route of the web application
 @app.route('/')
 def index():
     connection = get_db_connection()
@@ -30,7 +30,7 @@ def index():
     connection.close()
     return render_template('index.html', posts=posts)
 
-# Define how each individual article is rendered 
+# Define how each individual article is rendered
 # If the post ID is not found a 404 page is shown
 @app.route('/<int:post_id>')
 def post(post_id):
@@ -45,7 +45,7 @@ def post(post_id):
 def about():
     return render_template('about.html')
 
-# Define the post creation functionality 
+# Define the post creation functionality
 @app.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
@@ -64,6 +64,17 @@ def create():
             return redirect(url_for('index'))
 
     return render_template('create.html')
+
+# Define the healtz endpoint
+@app.route('/healthz')
+def healthz():
+	response = app.response_class(
+		response=json.dumps({"result": "OK - healthy"}),
+		status=200,
+		mimetype='application/json'
+	)
+
+	return response
 
 # start the application on port 3111
 if __name__ == "__main__":
