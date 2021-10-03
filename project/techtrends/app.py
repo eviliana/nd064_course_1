@@ -2,12 +2,16 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
+# Global scope variable
+connection_count = 0
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    global connection_count
+    connection_count = connection_count + 1
     return connection
 
 # Function to get a post using its ID
