@@ -22,6 +22,13 @@ def get_post(post_id):
     connection.close()
     return post
 
+# Function to get total amount of posts in the database
+def get_total_posts():
+    connection = get_db_connection()
+    total_posts = connection.execute('SELECT * FROM posts').fetchall()
+    connection.close()
+    return len(total_posts)
+
 # Define the Flask application
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
