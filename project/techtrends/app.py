@@ -2,6 +2,8 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
+import logging
+
 # Global scope variable
 connection_count = 0
 
@@ -104,4 +106,13 @@ def metrics():
 
 # start the application on port 3111
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port='3111')
+
+	# stream logs to app.log file
+	logging.basicConfig(
+		filename='app.log',
+		level=logging.DEBUG,
+		format='%(levelname)s: %(asctime)s - %(message)s',
+		datefmt='[%d/%b/%Y %H:%M:%S]'
+	)
+
+	app.run(host='0.0.0.0', port='3111')
